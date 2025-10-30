@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+// import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { TextField, CircularProgress } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withStyles } from '@material-ui/styles';
@@ -18,7 +19,13 @@ const styles = () => {
 function Species(props) {
   // Verify also uses speciesInput so keep it on context
   const speciesContext = useContext(SpeciesContext);
-
+  // Make sure the list is populated when we land on Verify directly.
+  useEffect(() => {
+    // Prefer ensureLoaded(); fall back to load() if that’s what your context exposes.
+    speciesContext.ensureLoaded?.();
+    speciesContext.load?.();
+    // no await; Autocomplete will re-render when the list arrives
+  }, []);
   return (
     <>
       {speciesContext.isLoading ? (

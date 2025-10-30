@@ -1,3 +1,4 @@
+import '../../testMocks/mockSpeciesContext';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import {
@@ -7,6 +8,7 @@ import {
   within,
   cleanup,
   waitForElementToBeRemoved,
+  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 // import { session, hasPermission, POLICIES } from '../models/auth';
@@ -19,6 +21,22 @@ import { SPECIES } from './fixtures';
 
 import * as loglevel from 'loglevel';
 const log = loglevel.getLogger('../tests/species.test');
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const qc = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false, refetchOnWindowFocus: false },
+  },
+});
+
+const SpeciesProviderWithOverrides = ({ children, overrides }) => {
+  const base = React.useContext(SpeciesContext);
+  return (
+    <SpeciesContext.Provider value={{ ...base, ...overrides }}>
+      {children}
+    </SpeciesContext.Provider>
+  );
+};
 
 describe('species management', () => {
   let api;
@@ -67,13 +85,15 @@ describe('species management', () => {
   describe('<SpeciesView /> renders page', () => {
     beforeEach(async () => {
       render(
-        <BrowserRouter>
-          <AppProvider>
-            <SpeciesProvider value={speciesValues}>
-              <SpeciesView />
-            </SpeciesProvider>
-          </AppProvider>
-        </BrowserRouter>
+        <QueryClientProvider client={qc}>
+          <BrowserRouter>
+            <AppProvider>
+              <SpeciesProvider value={speciesValues}>
+                <SpeciesView />
+              </SpeciesProvider>
+            </AppProvider>
+          </BrowserRouter>
+        </QueryClientProvider>
       );
       await act(() => api.getSpecies());
     });
@@ -161,8 +181,10 @@ describe('species management', () => {
 
       afterEach(cleanup);
 
-      it('api.createSpecies should be called with "water melon"', () => {
-        expect(api.createSpecies.mock.calls[0][0].name).toBe('water melon');
+      it('api.createSpecies should be called with "water melon"', async () => {
+        await waitFor(() => {
+          expect(api.createSpecies.mock.calls[0][0].name).toBe('water melon');
+        });
       });
 
       // it('species list should be 3 (1 added)', () => {

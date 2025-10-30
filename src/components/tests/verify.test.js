@@ -40,6 +40,13 @@ import {
 import * as loglevel from 'loglevel';
 const log = loglevel.getLogger('../tests/verify.test');
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const qc = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false, refetchOnWindowFocus: false },
+  },
+});
+
 jest.setTimeout(7000);
 jest.mock('../../api/growers');
 jest.mock('../../api/treeTrackerApi');
@@ -111,19 +118,21 @@ describe('Verify', () => {
     beforeEach(async () => {
       render(
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <AppProvider value={{ orgList: ORGS }}>
-              <GrowerContext.Provider value={growerValues}>
-                <VerifyProvider value={verifyValues}>
-                  <SpeciesProvider value={speciesValues}>
-                    <TagsContext.Provider value={tagsValues}>
-                      <Verify />
-                    </TagsContext.Provider>
-                  </SpeciesProvider>
-                </VerifyProvider>
-              </GrowerContext.Provider>
-            </AppProvider>
-          </BrowserRouter>
+          <QueryClientProvider client={qc}>
+            <BrowserRouter>
+              <AppProvider value={{ orgList: ORGS }}>
+                <GrowerContext.Provider value={growerValues}>
+                  <VerifyProvider value={verifyValues}>
+                    <SpeciesProvider value={speciesValues}>
+                      <TagsContext.Provider value={tagsValues}>
+                        <Verify />
+                      </TagsContext.Provider>
+                    </SpeciesProvider>
+                  </VerifyProvider>
+                </GrowerContext.Provider>
+              </AppProvider>
+            </BrowserRouter>
+          </QueryClientProvider>
         </ThemeProvider>
       );
 

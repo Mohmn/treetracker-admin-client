@@ -14,19 +14,28 @@ export const SpeciesContext = createContext({
   editSpecies: () => {},
   deleteSpecies: () => {},
   combineSpecies: () => {},
+  ensureLoaded: () => {},
 });
 
 export function SpeciesProvider({ children }) {
   const [speciesInput, setSpeciesInput] = useState('');
   const queryClient = useQueryClient();
 
-  const { data: speciesList = [], isLoading } = useQuery({
+  const { data: speciesList = [], isLoading, refetch } = useQuery({
     queryKey: ['species'],
     queryFn: () => api.getSpecies(), // API already has getSpecies
     staleTime: 1000 * 60 * 5, // cache for 5 mins
     refetchOnWindowFocus: false,
     enabled: false, // ✅ Disable automatic fetching until Home mounts
   });
+
+  // Manually trigger a load only when needed
+  const ensureLoaded = async () => {
+    const cached = queryClient.getQueryData(['species']);
+    if (!cached || cached.length === 0) {
+      await refetch();
+    }
+  };
 
   // only used by Species dropdown
   const onChange = (text) => {
@@ -86,6 +95,7 @@ export function SpeciesProvider({ children }) {
     editSpecies,
     deleteSpecies,
     combineSpecies,
+    ensureLoaded, // expose to components
   };
 
   return (
