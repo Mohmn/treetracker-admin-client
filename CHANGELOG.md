@@ -1,3 +1,10 @@
+# [1.108.0-hotfix.2](https://github.com/Greenstand/treetracker-admin-client/compare/v1.108.0-hotfix.1...v1.108.0-hotfix.2) (2025-10-30)
+
+
+### Bug Fixes
+
+* tests and added testMocks folder ([3da0c19](https://github.com/Greenstand/treetracker-admin-client/commit/3da0c19bc678addfeea58ee5510e097985ee7f0b))
+
 # [1.108.0-hotfix.1](https://github.com/Greenstand/treetracker-admin-client/compare/v1.107.18...v1.108.0-hotfix.1) (2025-10-11)
 
 
