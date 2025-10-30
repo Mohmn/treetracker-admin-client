@@ -69,7 +69,7 @@ describe('species management', () => {
       speciesInput: '',
       speciesDesc: '',
       setSpeciesInput: () => {},
-      //loadSpeciesList: () => {},
+      loadSpeciesList: () => {},
       onChange: () => {},
       isNewSpecies: () => {},
       createSpecies: () => {},
