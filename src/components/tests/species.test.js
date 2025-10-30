@@ -1,22 +1,3 @@
-// jest.mock('../../context/SpeciesContext', () => {
-//   const React = require('react');
-//   const ctxValue = {
-//     speciesList: [],
-//     isLoading: false,
-//     loadSpeciesList: jest.fn(),
-//     ensureLoaded: jest.fn(),
-//     createSpecies: jest.fn(),
-//     editSpecies: jest.fn(),
-//     deleteSpecies: jest.fn(),
-//     combineSpecies: jest.fn(),
-//   };
-//   const SpeciesContext = React.createContext(ctxValue);
-//   return {
-//     SpeciesContext,
-//     SpeciesProvider: ({ children }) =>
-//       React.createElement(SpeciesContext.Provider, { value: ctxValue }, children),
-//   };
-// });
 import '../../testMocks/mockSpeciesContext';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
