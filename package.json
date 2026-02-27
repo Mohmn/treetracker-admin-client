@@ -74,7 +74,8 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "prettier:fix": "prettier src/ --write || true",
-    "wdio": "wdio run wdio.conf.js"
+    "wdio": "wdio run wdio.conf.js",
+    "wdio:report": "allure generate ./reports/allure-results --clean -o ./reports/allure-html && allure open ./reports/allure-html"
   },
   "browserslist": [
     ">0.2%",
@@ -92,10 +93,12 @@
     "@storybook/addon-links": "^6.5.9",
     "@storybook/addons": "^6.5.9",
     "@storybook/react": "^6.5.9",
+    "@wdio/allure-reporter": "^9.23.2",
     "@wdio/cli": "^9.23.2",
     "@wdio/cucumber-framework": "^9.23.2",
     "@wdio/local-runner": "^9.23.2",
     "@wdio/spec-reporter": "^9.23.2",
+    "allure-commandline": "^2.37.0",
     "cross-env": "^7.0.2",
     "cypress": "^9.5.0",
     "cypress-react-unit-test": "^4.3.1",
@@ -109,6 +112,7 @@
     "pretty-quick": "^3.1.0",
     "react-inspector": "^3.0.2",
     "wdio-chromedriver-service": "^8.1.1",
+    "wdio-video-reporter": "^6.2.0",
     "webdriverio": "^9.23.2"
   },
   "engines": {
