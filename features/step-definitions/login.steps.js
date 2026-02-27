@@ -20,3 +20,10 @@ When('I click the login button', async () => {
 Then('I should see an error message', async () => {
   await expect(loginPage.errorMessage).toBeDisplayed();
 });
+
+Then('I should be redirected away from the login page', async () => {
+  await browser.waitUntil(
+    async () => !(await browser.getUrl()).includes('/login'),
+    { timeout: 10000, timeoutMsg: 'Expected URL to leave /login after login' }
+  );
+});
