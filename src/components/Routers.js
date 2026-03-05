@@ -4,7 +4,8 @@ import { Redirect, Route, useLocation, Switch } from 'react-router-dom';
 // import v6 components and integrate to app. Run v5 and v6 simultaneously
 
 import Grid from '@material-ui/core/Grid';
-import Login from './Login';
+import LoginRoute from './LoginRoute';
+import AuthCallback from './AuthCallback';
 import { AppContext } from '../context/AppContext';
 import PrivateRoute from './PrivateRoute';
 import Unauthorized from './Unauthorized';
@@ -39,8 +40,11 @@ export default function Routers() {
             }}
           >
             <Switch>
+              <Route path="/auth/callback">
+                <AuthCallback />
+              </Route>
               <Route path="/login">
-                <Login />
+                <LoginRoute />
               </Route>
               <Route path="/planters">
                 {' '}
