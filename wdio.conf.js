@@ -4,6 +4,8 @@ const fs = require('fs');
 
 const SCREENSHOT_DIR = path.resolve('./reports/video/.frames');
 const VIDEO_OUTPUT = path.resolve('./reports/video/test-run.mp4');
+const CHROMEDRIVER_PATH = path.resolve('./.drivers/chromedriver');
+const FFMPEG_PATH = process.env.FFMPEG_PATH || 'ffmpeg';
 let screenshotInterval = null;
 let frameCount = 0;
 
@@ -32,7 +34,7 @@ function stopCapture() {
   if (frameCount === 0) return;
   // stitch frames into mp4
   const result = spawnSync(
-    '/Users/deanchen/soft/ffmpeg',
+    FFMPEG_PATH,
     [
       '-y',
       '-framerate',
@@ -82,7 +84,7 @@ exports.config = {
     [
       'chromedriver',
       {
-        chromedriverCustomPath: './.drivers/chromedriver',
+        chromedriverCustomPath: CHROMEDRIVER_PATH,
       },
     ],
   ],
@@ -115,7 +117,7 @@ exports.config = {
     snippets: true,
     source: true,
     strict: false,
-    tagExpression: '',
+    tags: process.env.WDIO_TAGS || '',
     timeout: 60000,
     ignoreUndefinedDefinitions: false,
   },
