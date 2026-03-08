@@ -74,7 +74,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "prettier:fix": "prettier src/ --write || true",
-    "wdio": "wdio run wdio.conf.js",
+    "wdio": "cross-env wdio run wdio.conf.js",
     "wdio:report": "allure generate ./reports/allure-results --clean -o ./reports/allure-html && allure open ./reports/allure-html"
   },
   "browserslist": [

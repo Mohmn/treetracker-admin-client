@@ -6,8 +6,9 @@ Feature: Login
     And I click the login button
     Then I should see an error message
 
+
   Scenario: Login with valid credentials succeeds
     Given I am on the login page
-    When I enter username "test-dev" and password "5Z5971uQXV"
+    When I enter username "admin" and password "j.=T2h6b;43&"
     And I click the login button
     Then I should be redirected away from the login page
