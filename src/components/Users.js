@@ -49,7 +49,7 @@ import EmojiObjects from '@material-ui/icons/EmojiObjects';
 import { withStyles } from '@material-ui/core/styles';
 import { authAxios } from '../api/httpClient';
 import { AppContext } from '../context/AppContext';
-import pwdGenerator from 'generate-password';
+import pwdGenerator from 'generate-password-browser';
 import { getDateTimeStringLocale } from '../common/locale';
 import { documentTitle } from '../common/variables';
 import Menu from './common/Menu';
