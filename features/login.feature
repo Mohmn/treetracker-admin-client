@@ -9,6 +9,6 @@ Feature: Login
 
   Scenario: Login with valid credentials succeeds
     Given I am on the login page
-    When I enter username "admin" and password "j.=T2h6b;43&"
+    When I enter username "user-test-treetracker-admin-client" and password "LjyxVk4t5^yx&!Gl"
     And I click the login button
     Then I should be redirected away from the login page
