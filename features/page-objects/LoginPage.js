@@ -1,6 +1,14 @@
 class LoginPage {
+  get pageTitle() {
+    return $('#kc-page-title');
+  }
+
+  get loginForm() {
+    return $('#kc-form-login');
+  }
+
   get usernameInput() {
-    return $('#userName');
+    return $('#username');
   }
 
   get passwordInput() {
@@ -8,17 +16,73 @@ class LoginPage {
   }
 
   get submitButton() {
-    return $('button[type="submit"]');
+    return $('#kc-login');
   }
 
-  get errorMessage() {
-    return $('h6');
+  get invalidCredentialsError() {
+    return $('#input-error');
+  }
+
+  async isOpen() {
+    return this.loginForm.isExisting();
+  }
+
+  async waitForPage() {
+    await this.loginForm.waitForExist({
+      timeout: 60000,
+      timeoutMsg: 'Expected to be redirected to the Keycloak sign-in page',
+    });
+
+    await this.pageTitle.waitForDisplayed({ timeout: 10000 });
+    await this.usernameInput.waitForDisplayed({ timeout: 10000 });
+    await this.passwordInput.waitForDisplayed({ timeout: 10000 });
+  }
+
+  async enterCredentials(username, password) {
+    await this.waitForPage();
+    await this.usernameInput.setValue(username);
+    await this.passwordInput.setValue(password);
+  }
+
+  async submit() {
+    await this.submitButton.waitForDisplayed({ timeout: 10000 });
+    await this.submitButton.click();
   }
 
   async login(username, password) {
-    await this.usernameInput.setValue(username);
-    await this.passwordInput.setValue(password);
-    await this.submitButton.click();
+    await this.enterCredentials(username, password);
+    await this.submit();
+  }
+
+  async waitForInvalidCredentials() {
+    await this.waitForPage();
+
+    await this.invalidCredentialsError.waitForDisplayed({
+      timeout: 10000,
+      timeoutMsg: 'Expected Keycloak to show invalid credential feedback',
+    });
+  }
+
+  async waitForSuccessfulRedirect() {
+    const baseUrl = browser.options.baseUrl;
+
+    await browser.waitUntil(
+      async () => {
+        const currentUrl = await browser.getUrl();
+
+        if (!baseUrl || !currentUrl.startsWith(baseUrl)) {
+          return false;
+        }
+
+        const currentPath = new URL(currentUrl).pathname;
+        return currentPath !== '/login' && currentPath !== '/auth/callback';
+      },
+      {
+        timeout: 60000,
+        interval: 500,
+        timeoutMsg: 'Expected successful login to redirect back to the app',
+      }
+    );
   }
 }
 
