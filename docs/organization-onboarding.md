@@ -18,7 +18,7 @@ Please also refer to table `entity` in DB.
 
 The sequence:
 
-![Organization Application Flow](./apply-org.png)
+![Organization Application Flow](./images/apply-org.png)
 
 The API need to post the organization id and request new role for the user, the role spec for now:
 
@@ -30,5 +30,5 @@ After the application, user become organization, so they can see the menu and do
 
 The sequence for verifying trees:
 
-![Organization Verify Tree Flow](./Verify-tree.png)
+![Organization Verify Tree Flow](./images/Verify-tree.png)
 
