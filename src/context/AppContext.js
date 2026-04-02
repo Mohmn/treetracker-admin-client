@@ -9,6 +9,8 @@ import EarningsView from '../views/EarningsView/EarningsView';
 import PaymentsView from '../views/PaymentsView/PaymentsView';
 import MessagingView from 'views/MessagingView';
 import MatchingToolView from '../views/MatchingToolView';
+import OrganizationApplicationView from '../views/OrganizationApplicationView';
+import OrganizationVerifyView from '../views/OrganizationVerifyView';
 import Stakeholder from '../views/StakeholdersView';
 import Account from '../components/Account';
 import Home from '../components/Home/Home';
@@ -33,6 +35,7 @@ import CreditCardIcon from '@material-ui/icons/CreditCard';
 import InboxRounded from '@material-ui/icons/InboxRounded';
 import MapIcon from '@material-ui/icons/Map';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import BusinessIcon from '@material-ui/icons/Business';
 import { session, hasPermission, POLICIES } from '../models/auth';
 import api from '../api/treeTrackerApi';
 import RegionsView from 'views/RegionsView';
@@ -160,6 +163,26 @@ function getRoutes(user) {
           POLICIES.LIST_STAKEHOLDERS,
           POLICIES.MANAGE_STAKEHOLDERS,
         ]),
+    },
+    {
+      name: 'Organization',
+      children: [
+        {
+          name: 'Apply',
+          linkTo: '/organization/apply',
+          component: OrganizationApplicationView,
+          icon: BusinessIcon,
+          disabled: !user,
+        },
+        {
+          name: 'Verify',
+          linkTo: '/organization/verify',
+          component: OrganizationVerifyView,
+          icon: IconThumbsUpDown,
+          disabled: !user,
+        },
+      ],
+      disabled: !user,
     },
     {
       name: 'Settings',
